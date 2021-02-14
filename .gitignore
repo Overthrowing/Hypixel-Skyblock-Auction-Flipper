@@ -1,5 +1,16 @@
-# API key
-key
+# Ignore python cache
+__pycache__/
 
-# Pycharm
+# virtualenv
+env/
+venv/
+.venv
+
+# Ignore intellij Files (PyCharm)
 .idea
+
+# Testing files
+response.json
+
+# API key
+key.json
