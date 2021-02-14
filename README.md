@@ -1,6 +1,6 @@
-##BIN auction flipper for Hypixel Skyblock
+# BIN auction flipper for Hypixel Skyblock
 
-##API key
+## API key
 To add your API key create a file called "key.json" with the following text:
 
 ```
