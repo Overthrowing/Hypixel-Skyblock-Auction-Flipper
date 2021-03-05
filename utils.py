@@ -1,13 +1,18 @@
+from requests_futures.sessions import FuturesSession
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import as_completed
 import requests as r
 import json
 
 
 HYPIXEL_API = "https://api.hypixel.net/"
+CONFIG = json.load(open("config.json", "r"))
 
 
 def get_key():
     with open("key.json", "r") as key:
         return json.load(key)["key"]
+
 
 def get_auctions(key):
     response = r.get(HYPIXEL_API + "skyblock/auctions" + f"?key={key}").json()
@@ -20,14 +25,22 @@ def get_auctions(key):
 
     print('Total Pages:', page_count)
     print('Total Auctions:', response['totalAuctions'])
-    for i in range(1, page_count):
-        print('Getting Page:', f'{i}/{page_count}')
-        page = r.get(HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}")
+    print('Getting Pages.')
+
+    session = FuturesSession(executor=ThreadPoolExecutor(max_workers=CONFIG["max-request-workers"]))
+    urls = [
+        HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}" for i in range(1, page_count)
+    ]
+    responses = [session.get(u) for u in urls]
+
+    for res in as_completed(responses):
+        resp = res.result()
+        print('.', end="", flush=True)
 
         try:
-            page = page.json()
+            page = resp.json()
         except json.decoder.JSONDecodeError:
-            print(page.content[:500])
+            print(resp.content[:500])
 
         if "error" in page:
             raise MemoryError(page['error'], page['cause'])
@@ -36,8 +49,7 @@ def get_auctions(key):
         except KeyError:
             print(page.keys())
 
-    print('Getting Page:', f'{i+1}/{page_count}')
-    print('Finished Getting Pages.')
+    print('\nFinished Getting Pages.')
 
     return auctions
 
