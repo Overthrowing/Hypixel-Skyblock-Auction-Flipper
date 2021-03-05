@@ -161,23 +161,26 @@ for key in items:
 
 
 flips = sorted(flips, key=lambda k: k["Difference"])
-max_price = int(input("Max price (in thousands of coins): "))*1000
-print()
-
-def colorizer(val, c):
-    return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
 
 
-for flip in flips:
-    Name = flip["Item Name"]
-    Buy = flip["Buy Price"]
-    Sell = round(flip["Sell Price"])
-    Difference = round(flip["Difference"])
-    Profit = flip["Profit Margin"]
+if __name__ == "__main__":
+    max_price = int(input("Max price (in thousands of coins): "))*1000
+    print()
 
-    if Buy < max_price and Profit > 100:
-        print(f"""| Item Name: {colorizer(Name, 'blue')}
-        Buy Price:       {colorizer(Buy, 'yellow')}
-        Sell Price:      {colorizer(Sell, 'yellow')}
-        Profit:          {colorizer('$'+str(Difference), 'green')}
-        Profit Margin:   {colorizer(str(round(Profit/100, 2))+'x', 'green')}\n""")
+    def colorizer(val, c):
+        return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
+
+
+    for flip in flips:
+        Name = flip["Item Name"]
+        Buy = flip["Buy Price"]
+        Sell = round(flip["Sell Price"])
+        Difference = round(flip["Difference"])
+        Profit = flip["Profit Margin"]
+
+        if Buy < max_price and Profit > 100:
+            print(f"""| Item Name: {colorizer(Name, 'blue')}
+            Buy Price:       {colorizer(Buy, 'yellow')}
+            Sell Price:      {colorizer(Sell, 'yellow')}
+            Profit:          {colorizer('$'+str(Difference), 'green')}
+            Profit Margin:   {colorizer(str(round(Profit/100, 2))+'x', 'green')}\n""")
