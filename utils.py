@@ -1,3 +1,5 @@
+from requests_futures.sessions import FuturesSession
+from concurrent.futures import as_completed
 import requests as r
 import json
 
@@ -20,15 +22,22 @@ def get_auctions(key):
 
     print('Total Pages:', page_count)
     print('Total Auctions:', response['totalAuctions'])
-    print('Getting Pages...')
-    for i in range(1, page_count):
+    print('Getting Pages.')
+
+    session = FuturesSession()
+    urls = [
+        HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}" for i in range(1, page_count)
+    ]
+    responses = [session.get(u) for u in urls]
+
+    for res in as_completed(responses):
+        resp = res.result()
         print('.', end="", flush=True)
-        page = r.get(HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}")
 
         try:
-            page = page.json()
+            page = resp.json()
         except json.decoder.JSONDecodeError:
-            print(page.content[:500])
+            print(resp.content[:500])
 
         if "error" in page:
             raise MemoryError(page['error'], page['cause'])
