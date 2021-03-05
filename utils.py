@@ -20,8 +20,9 @@ def get_auctions(key):
 
     print('Total Pages:', page_count)
     print('Total Auctions:', response['totalAuctions'])
+    print('Getting Pages...')
     for i in range(1, page_count):
-        print('Getting Page:', f'{i}/{page_count}')
+        print('.', end="", flush=True)
         page = r.get(HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}")
 
         try:
@@ -36,8 +37,7 @@ def get_auctions(key):
         except KeyError:
             print(page.keys())
 
-    print('Getting Page:', f'{i+1}/{page_count}')
-    print('Finished Getting Pages.')
+    print('\nFinished Getting Pages.')
 
     return auctions
 
