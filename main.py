@@ -68,4 +68,4 @@ for flip in flips:
     Difference = round(flip["Difference"])
     Profit = flip["Profit Margin"]
 
-    print(f"| Item Name: {Name} | Buy Price: {Buy} | Sell Price: {Sell} | Profit: {Difference} | Profit Margin: {Profit} |\n")
+    print(f"| Item Name: {Name} | Buy Price: {Buy} | Sell Price: {Sell} | Profit: {Difference} | Profit Margin: {Profit}% |\n")
