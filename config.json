@@ -1,3 +1,4 @@
 {
-    "min-type-ahs": 10
+    "min-type-ahs": 10,
+    "max-request-workers": 12
 }

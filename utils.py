@@ -1,15 +1,18 @@
 from requests_futures.sessions import FuturesSession
+from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
 import requests as r
 import json
 
 
 HYPIXEL_API = "https://api.hypixel.net/"
+CONFIG = json.load(open("config.json", "r"))
 
 
 def get_key():
     with open("key.json", "r") as key:
         return json.load(key)["key"]
+
 
 def get_auctions(key):
     response = r.get(HYPIXEL_API + "skyblock/auctions" + f"?key={key}").json()
@@ -24,7 +27,7 @@ def get_auctions(key):
     print('Total Auctions:', response['totalAuctions'])
     print('Getting Pages.')
 
-    session = FuturesSession()
+    session = FuturesSession(executor=ThreadPoolExecutor(max_workers=CONFIG["max-request-workers"]))
     urls = [
         HYPIXEL_API + "skyblock/auctions" + f"?key={key}&page={i}" for i in range(1, page_count)
     ]
