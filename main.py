@@ -183,4 +183,4 @@ if __name__ == "__main__":
             Buy Price:       {colorizer(Buy, 'yellow')}
             Sell Price:      {colorizer(Sell, 'yellow')}
             Profit:          {colorizer('$'+str(Difference), 'green')}
-            Profit Margin:   {colorizer(str(round(Profit/100, 2))+'x', 'green')}\n""")
+            Profit Margin:   {colorizer(str(Profit)+'%', 'green')}\n""")
