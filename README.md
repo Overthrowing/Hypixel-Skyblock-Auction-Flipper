@@ -8,6 +8,7 @@ To use the auction flipper you must add your API key by createing a file called 
     "key": "<Your API Key>"
 }
 ```
+Then run `main.py`
 
 ## Config
 Config variables are stored in config.json.
