@@ -1,9 +1,8 @@
-from requests_futures.sessions import FuturesSession
+import json
+import requests as r
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
-import requests as r
-import json
-
+from requests_futures.sessions import FuturesSession
 
 HYPIXEL_API = "https://api.hypixel.net/"
 CONFIG = json.load(open("config.json", "r"))
@@ -52,4 +51,3 @@ def get_auctions(key):
     print('\nFinished Getting Pages.')
 
     return auctions
-

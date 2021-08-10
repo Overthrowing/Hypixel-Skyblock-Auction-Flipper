@@ -3,7 +3,6 @@ import json
 
 from utils import get_key, get_auctions
 
-
 CONFIG = json.load(open("config.json", "r"))
 KEY = get_key()
 
@@ -130,14 +129,12 @@ for auction in bin_auctions:
         for reforge in reforges[:-2]:
             auction["item_name"] = auction["item_name"].replace(reforge, "")
 
-
 items = {}
 for auction in bin_auctions:
     if auction["item_name"] not in items:
         items[auction["item_name"]] = [auction]
     else:
         items[auction["item_name"]].append(auction)
-
 
 flips = []
 for key in items:
@@ -149,25 +146,25 @@ for key in items:
         cheapest = sorted(cheapest)[:2]
 
         if len(cheapest) == 2:
-            difference = cheapest[1]*0.99 - cheapest[0]
-            margin = round(difference/cheapest[0]*100, 1)
+            difference = cheapest[1] * 0.99 - cheapest[0]
+            margin = round(difference / cheapest[0] * 100, 1)
             flips.append({
                 "Item Name": key,
                 "Buy Price": cheapest[0],
-                "Sell Price": cheapest[1]*0.99,
+                "Sell Price": cheapest[1] * 0.99,
                 "Difference": difference,
                 "Profit Margin": margin
             })
 
-
 flips = sorted(flips, key=lambda k: k["Difference"])
 
-
 if __name__ == "__main__":
-    max_price = int(input("Max price (in thousands of coins): "))*1000
+    max_price = int(input("Max price (in thousands of coins): ")) * 1000
     print()
 
     color.init()
+
+
     def colorizer(val, c):
         return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
 
@@ -183,5 +180,5 @@ if __name__ == "__main__":
             print(f"""| Item Name: {colorizer(Name, 'blue')}
             Buy Price:       {colorizer(Buy, 'yellow')}
             Sell Price:      {colorizer(Sell, 'yellow')}
-            Profit:          {colorizer('$'+str(Difference), 'green')}
-            Profit Margin:   {colorizer(str(Profit)+'%', 'green')}\n""")
+            Profit:          {colorizer('$' + str(Difference), 'green')}
+            Profit Margin:   {colorizer(str(Profit) + '%', 'green')}\n""")
