@@ -167,6 +167,7 @@ if __name__ == "__main__":
     max_price = int(input("Max price (in thousands of coins): "))*1000
     print()
 
+    color.init()
     def colorizer(val, c):
         return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
 
