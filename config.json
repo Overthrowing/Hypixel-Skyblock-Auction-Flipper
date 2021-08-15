@@ -1,4 +1,5 @@
 {
   "min-type-ahs": 1,
-  "max-request-workers": 12
+  "max-request-workers": 12,
+  "use-colors": false
 }
