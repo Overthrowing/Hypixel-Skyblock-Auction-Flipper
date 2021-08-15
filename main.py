@@ -166,7 +166,10 @@ if __name__ == "__main__":
 
 
     def colorizer(val, c):
-        return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
+        if CONFIG["use-colors"]:
+            return getattr(color.Fore, c.upper()) + str(val) + color.Fore.RESET
+        else:
+            return str(val)
 
 
     for flip in flips:
